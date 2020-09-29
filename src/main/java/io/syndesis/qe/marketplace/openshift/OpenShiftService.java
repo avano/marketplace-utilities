@@ -5,8 +5,10 @@ import io.fabric8.kubernetes.api.model.Secret;
 import io.fabric8.kubernetes.api.model.SecretList;
 import io.fabric8.kubernetes.api.model.apps.DeploymentList;
 import io.fabric8.kubernetes.client.dsl.base.CustomResourceDefinitionContext;
-import io.fabric8.openshift.api.model.OpenshiftRole;
+import io.fabric8.openshift.client.NamespacedOpenShiftClient;
+import io.fabric8.openshift.client.OpenShiftClient;
 import io.syndesis.qe.marketplace.util.HelperFunctions;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
@@ -258,7 +260,7 @@ public class OpenShiftService {
                         new ByteArrayInputStream(subscriptionYaml.getBytes(StandardCharsets.UTF_8)));
 
         //OpenshiftRole role = openShiftClient.roles().inNamespace(openShiftConfiguration.getNamespace()).withLabel("olm.owner", "fuse-online" +
-                //"-operator.v7.7.0").list().getItems().get(0);
+        //"-operator.v7.7.0").list().getItems().get(0);
 //        openShiftClient.serviceAccounts().inNamespace(openShiftConfiguration.getNamespace())
 //                .list().getItems().stream().filter(sa -> sa.getMetadata().getName().contains("operator"))
 //                .forEach(sa -> {
@@ -299,5 +301,9 @@ public class OpenShiftService {
                 openShiftConfiguration.getNamespace(),
                 operatorResourcesName,
                 openShiftConfiguration.getPullSecretName());
+    }
+
+    public OpenShift getClient() {
+        return openShiftClient;
     }
 }
